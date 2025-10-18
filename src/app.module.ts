@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
+import { Task } from './tasks/entities/task.entity';
 
 @Module({
   imports: [
@@ -16,10 +17,10 @@ import { User } from './users/entities/user.entity';
       username: 'root',
       password: 'root',
       database: 'nudge-flow-db',
-      entities: [User],
+      entities: [User, Task],
       synchronize: true,
     }),
-    TasksModule, AuthModule, UsersModule],
+    TasksModule, AuthModule, UsersModule, TasksModule],
   controllers: [AppController],
   providers: [AppService],
 })
