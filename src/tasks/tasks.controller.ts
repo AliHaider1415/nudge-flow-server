@@ -22,14 +22,14 @@ export class TasksController {
 
   @Post()
   async create(@Body() createTaskDto: CreateTaskDto, @Req() req: Request) {
-    const user = req.user;
-    return this.tasksService.create(createTaskDto, user);
+    const userId = req.user.sub;
+    return this.tasksService.create(createTaskDto, userId);
   }
 
   @Get()
   async findAllByUser(@Req() req: Request) {
-    const user = req.user;
-    return this.tasksService.findAllByUser(user.id);
+    const userId = req.user.sub;
+    return this.tasksService.findAllByUser(userId);
   }
 
   @Patch(':id')

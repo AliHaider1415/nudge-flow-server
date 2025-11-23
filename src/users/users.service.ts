@@ -19,6 +19,12 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  async create(username: string, email: string, password: string){
+
+    return this.usersRepository.save({ username, email, password });
+
+  }
+
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }

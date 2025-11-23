@@ -11,15 +11,24 @@ export class TasksService {
         @InjectRepository(Task)
         
         private readonly taskRepository: Repository<Task>,
+        // private readonly userRepository: Repository<User>,
     ) {}
 
-    create (createTaskDto: CreateTaskDto, user: User) {
+    create(dto: CreateTaskDto, userId: number) {
+
         const task = this.taskRepository.create({
-            ...createTaskDto,
-            user
-        })
-        this.taskRepository.save(task)
+            ...dto,
+            dueDate: dto.dueDate ? new Date(dto.dueDate) : null,
+            user: { id: userId } as any
+        });
+
+        this.taskRepository.save(task);
+
+        return {
+            message: "Task created successfully",
+        };
     }
+
 
     async findAllByUser(userId: number) : Promise<Task[]> {
         const tasks = await this.taskRepository.find({
@@ -34,9 +43,18 @@ export class TasksService {
         return tasks;
     }
 
-    async update (id: number, updateTaskDto: UpdateTaskDto) {
-        await this.taskRepository.update(id, updateTaskDto)
+    async update(id: number, dto: UpdateTaskDto) {
+        const updateData: any = {
+            ...dto,
+        };
+
+        if (dto.dueDate) {
+            updateData.dueDate = new Date(dto.dueDate);
+        }
+
+        return await this.taskRepository.update(id, updateData);
     }
+
 
     remove (id: number) {
         this.taskRepository.delete(id)

@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { Task } from './tasks/entities/task.entity';
+import { MonitoredAppModule } from './monitored-app/monitored-app.module';
+import { MonitoredApp } from './monitored-app/entities/monitored-app.entity';
 
 @Module({
   imports: [
@@ -15,13 +17,13 @@ import { Task } from './tasks/entities/task.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: 'admin',
       database: 'nudge-flow-db',
-      entities: [User, Task],
+      entities: [User, Task, MonitoredApp],
       synchronize: true,
     }),
-    TasksModule, AuthModule, UsersModule, TasksModule],
-  controllers: [AppController],
+    TasksModule, AuthModule, UsersModule, TasksModule, MonitoredAppModule],
+  controllers: [AppController], 
   providers: [AppService],
 })
 export class AppModule {}

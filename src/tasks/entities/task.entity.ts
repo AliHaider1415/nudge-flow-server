@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 
 @Entity()
@@ -16,11 +16,11 @@ export class Task {
   completed: boolean;
 
   @Column({ type: 'timestamp', nullable: true })
-  dueDate: Date;
+  dueDate?: Date | null;
 
   @Column({ type: 'enum', enum: ['Low', 'Medium', 'High'], default: 'Medium' })
   priority: 'Low' | 'Medium' | 'High';
 
-  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'CASCADE' })
   user: User;
 }

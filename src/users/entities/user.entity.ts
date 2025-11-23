@@ -1,15 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { MonitoredApp } from 'src/monitored-app/entities/monitored-app.entity';
+import { Task } from 'src/tasks/entities/task.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
 
   @Column({ unique: true })
   username: string;
@@ -22,4 +18,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => MonitoredApp, (ma) => ma.user)
+  monitoredApps: MonitoredApp[];
+
+  @OneToMany(() => Task, (task) => task.user)
+  tasks: Task[];
 }
