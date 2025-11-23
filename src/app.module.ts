@@ -14,7 +14,7 @@ import { MonitoredApp } from './monitored-app/entities/monitored-app.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'host.docker.internal',
       port: 3306,
       username: 'root',
       password: 'admin',
